@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: GPL-2.0-only */
 /*
  * Copyright (c) 2016-2021, The Linux Foundation. All rights reserved.
- * Copyright (c) 2022-2023, Qualcomm Innovation Center, Inc. All rights reserved.
+ * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
  */
 
 #ifndef _CAM_ISP_HW_MGR_INTF_H_
@@ -46,8 +46,6 @@
 #define CAM_IFE_CTX_SFE_EN             BIT(4)
 #define CAM_IFE_CTX_AEB_EN             BIT(5)
 #define CAM_IFE_CTX_DYNAMIC_SWITCH_EN  BIT(6)
-#define CAM_IFE_CTX_SHDR_EN            BIT(7)
-#define CAM_IFE_CTX_SHDR_IS_MASTER     BIT(8)
 
 /*
  * Maximum configuration entry size  - This is based on the
@@ -375,7 +373,6 @@ enum cam_isp_hw_mgr_command {
 	CAM_ISP_HW_MGR_CMD_PROG_DEFAULT_CFG,
 	CAM_ISP_HW_MGR_GET_SOF_TS,
 	CAM_ISP_HW_MGR_DUMP_STREAM_INFO,
-	CAM_ISP_HW_MGR_CMD_UPDATE_CLOCK,
 	CAM_ISP_HW_MGR_CMD_MAX,
 };
 
@@ -440,21 +437,6 @@ struct cam_isp_lcr_rdi_cfg_args {
 	struct cam_isp_lcr_rdi_config *rdi_lcr_cfg;
 	uint32_t                       ife_src_res_id;
 	bool                           is_init;
-};
-
-
-/**
- * struct cam_isp_mode_switch_data - isp hardware mode update arguments
- *
- * @mup                 Mup value
- * @num_expoures        Number of exposures
- * @mup_en              Flag to indicate if mup is enable
- *
- */
-struct cam_isp_mode_switch_data {
-	uint32_t                      mup;
-	uint32_t                      num_expoures;
-	bool                          mup_en;
 };
 
 /**

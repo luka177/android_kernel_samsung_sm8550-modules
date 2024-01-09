@@ -1,7 +1,6 @@
 /* SPDX-License-Identifier: GPL-2.0-only */
 /*
  * Copyright (c) 2019-2021, The Linux Foundation. All rights reserved.
- * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
  */
 
 #ifndef _CAM_TFE_HW_MGR_H_
@@ -45,17 +44,6 @@ struct cam_tfe_hw_mgr_debug {
 };
 
 /**
- * struct cam_tfe_cdm_user_data - TFE HW user data with CDM
- *
- * @prepare:                   hw_update_data
- * @request_id:                Request id
- */
-struct cam_tfe_cdm_user_data {
-	struct cam_isp_prepare_hw_update_data    *hw_update_data;
-	uint64_t                                  request_id;
-};
-
-/**
  * struct cam_tfe_hw_mgr_ctx - TFE HW manager Context object
  *
  * @list:                     used by the ctx list.
@@ -96,11 +84,6 @@ struct cam_tfe_cdm_user_data {
  *                              dual TFE
  * @packet                     CSL packet from user mode driver
  * @bw_config_version          BW Config version
- * @cdm_userdata               CDM user data
- * @try_recovery_cnt          Retry count for overflow recovery
- * @current_mup               Current MUP val
- * @recovery_req_id           The request id on which overflow recovery happens
- * @is_shdr_slave              indicate whether context is slave in shdr usecase
  */
 struct cam_tfe_hw_mgr_ctx {
 	struct list_head                list;
@@ -143,11 +126,6 @@ struct cam_tfe_hw_mgr_ctx {
 	uint32_t                        dual_tfe_irq_mismatch_cnt;
 	struct cam_packet              *packet;
 	uint32_t                        bw_config_version;
-	struct cam_tfe_cdm_user_data    cdm_userdata;
-	uint32_t                        current_mup;
-	uint32_t                        try_recovery_cnt;
-	uint64_t                        recovery_req_id;
-	bool                            is_shdr_slave;
 };
 
 /**
@@ -168,7 +146,6 @@ struct cam_tfe_hw_mgr_ctx {
  * @tfe_dev_caps           tfe device capability per core
  * @work q                 work queue for TFE hw manager
  * @debug_cfg              debug configuration
- * @path_port_map          Mapping of outport to TFE mux
  * @support_consumed_addr  indicate whether hw supports last consumed address
  * @ctx_lock               Spinlock for HW manager
  */
@@ -188,7 +165,6 @@ struct cam_tfe_hw_mgr {
 	struct cam_tfe_hw_get_hw_cap   tfe_dev_caps[CAM_TFE_HW_NUM_MAX];
 	struct cam_req_mgr_core_workq *workq;
 	struct cam_tfe_hw_mgr_debug    debug_cfg;
-	struct cam_isp_hw_path_port_map  path_port_map;
 	bool                           support_consumed_addr;
 	spinlock_t                     ctx_lock;
 };

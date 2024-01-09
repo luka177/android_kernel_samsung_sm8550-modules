@@ -1,7 +1,6 @@
 /* SPDX-License-Identifier: GPL-2.0-only */
 /*
  * Copyright (c) 2019-2021, The Linux Foundation. All rights reserved.
- * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
  */
 
 
@@ -12,14 +11,14 @@
 #include "cam_isp_hw.h"
 #include "cam_tfe_hw_intf.h"
 
-#define CAM_TFE_BUS_MAX_CLIENTS            19
+#define CAM_TFE_BUS_MAX_CLIENTS            16
 #define CAM_TFE_BUS_MAX_SUB_GRPS            4
 #define CAM_TFE_BUS_MAX_PERF_CNT_REG        8
 #define CAM_TFE_BUS_MAX_IRQ_REGISTERS       2
 #define CAM_TFE_BUS_CLIENT_NAME_MAX_LENGTH 32
 
 #define CAM_TFE_BUS_1_0             0x1000
-#define CAM_TFE_BUS_MAX_MID_PER_PORT        2
+#define CAM_TFE_BUS_MAX_MID_PER_PORT        1
 
 
 #define CAM_TFE_ADD_REG_VAL_PAIR(buf_array, index, offset, val)    \
@@ -61,7 +60,6 @@ enum cam_tfe_bus_comp_grp_id {
 	CAM_TFE_BUS_COMP_GRP_8,
 	CAM_TFE_BUS_COMP_GRP_9,
 	CAM_TFE_BUS_COMP_GRP_10,
-	CAM_TFE_BUS_COMP_GRP_11,
 	CAM_TFE_BUS_COMP_GRP_MAX,
 };
 
@@ -70,7 +68,6 @@ enum cam_tfe_bus_rup_grp_id {
 	CAM_TFE_BUS_RUP_GRP_1,
 	CAM_TFE_BUS_RUP_GRP_2,
 	CAM_TFE_BUS_RUP_GRP_3,
-	CAM_TFE_BUS_RUP_GRP_4,
 	CAM_TFE_BUS_RUP_GRP_MAX,
 };
 
@@ -90,9 +87,6 @@ enum cam_tfe_bus_tfe_out_id {
 	CAM_TFE_BUS_TFE_OUT_DS4,
 	CAM_TFE_BUS_TFE_OUT_DS16,
 	CAM_TFE_BUS_TFE_OUT_AI,
-	CAM_TFE_BUS_TFE_OUT_PD_LCR_STATS,
-	CAM_TFE_BUS_TFE_OUT_PD_PREPROCESSED,
-	CAM_TFE_BUS_TFE_OUT_PD_PARSED,
 	CAM_TFE_BUS_TFE_OUT_MAX,
 };
 
@@ -150,7 +144,6 @@ struct cam_tfe_bus_reg_offset_bus_client {
 	uint32_t irq_subsample_pattern;
 	uint32_t framedrop_period;
 	uint32_t framedrop_pattern;
-	uint32_t system_cache_cfg;
 	uint32_t addr_status_0;
 	uint32_t addr_status_1;
 	uint32_t addr_status_2;
@@ -180,7 +173,7 @@ struct cam_tfe_bus_tfe_out_hw_info {
 	uint32_t                            max_height;
 	uint32_t                            composite_group;
 	uint32_t                            rup_group_id;
-	uint32_t                            mid[CAM_TFE_BUS_MAX_MID_PER_PORT];
+	uint32_t                            mid;
 };
 
 /*
@@ -202,7 +195,6 @@ struct cam_tfe_bus_tfe_out_hw_info {
  * @rdi_width:             RDI WM width
  * @support_consumed_addr: Indicate if bus support consumed address
  * @pdaf_rdi2_mux_en:      Indicate is PDAF is muxed with RDI2
- * @pack_align_shift:      pack alignment shift
  */
 struct cam_tfe_bus_hw_info {
 	struct cam_tfe_bus_reg_offset_common common_reg;
@@ -215,8 +207,6 @@ struct cam_tfe_bus_hw_info {
 	uint32_t num_comp_grp;
 	uint32_t max_wm_per_comp_grp;
 	uint32_t comp_done_shift;
-	uint32_t en_cfg_shift;
-	uint32_t height_shift;
 	uint32_t top_bus_wr_irq_shift;
 	uint32_t comp_buf_done_mask;
 	uint32_t comp_rup_done_mask;
@@ -224,7 +214,6 @@ struct cam_tfe_bus_hw_info {
 	uint32_t rdi_width;
 	bool support_consumed_addr;
 	bool pdaf_rdi2_mux_en;
-	uint32_t pack_align_shift;
 };
 
 /*

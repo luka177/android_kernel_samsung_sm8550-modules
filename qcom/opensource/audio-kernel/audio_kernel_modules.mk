@@ -49,6 +49,10 @@ AUDIO_KERNEL_MODULES += $(KERNEL_MODULES_OUT)/swr_dmic_dlkm.ko \
 	$(KERNEL_MODULES_OUT)/wcd937x_dlkm.ko \
 	$(KERNEL_MODULES_OUT)/wcd937x_slave_dlkm.ko
 endif
+ifeq ($(PROJECT_NAME),$(filter $(PROJECT_NAME),b5q e5q))
+AUDIO_KERNEL_MODULES += $(KERNEL_MODULES_OUT)/tfa9878_dlkm.ko \
+	$(KERNEL_MODULES_OUT)/tfa9878_sysfs_dlkm.ko
+endif
 ifeq ($(call is-board-platform-in-list,bengal), true)
 AUDIO_KERNEL_MODULES += $(KERNEL_MODULES_OUT)/bolero_cdc_dlkm.ko \
 	$(KERNEL_MODULES_OUT)/va_macro_dlkm.ko \

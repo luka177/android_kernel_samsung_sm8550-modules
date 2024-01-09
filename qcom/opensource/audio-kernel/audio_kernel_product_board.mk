@@ -36,6 +36,10 @@ PRODUCT_PACKAGES += $(KERNEL_MODULES_OUT)/swr_dmic_dlkm.ko \
 	$(KERNEL_MODULES_OUT)/wcd939x_dlkm.ko \
 	$(KERNEL_MODULES_OUT)/wcd939x_slave_dlkm.ko
 endif
+ifeq ($(PROJECT_NAME),$(filter $(PROJECT_NAME),b5q e5q))
+PRODUCT_PACKAGES += $(KERNEL_MODULES_OUT)/tfa9878_dlkm.ko \
+	$(KERNEL_MODULES_OUT)/tfa9878_sysfs_dlkm.ko
+endif
 ifeq ($(call is-board-platform-in-list,bengal), true)
 PRODUCT_PACKAGES += $(KERNEL_MODULES_OUT)/bolero_cdc_dlkm.ko \
 	$(KERNEL_MODULES_OUT)/va_macro_dlkm.ko \

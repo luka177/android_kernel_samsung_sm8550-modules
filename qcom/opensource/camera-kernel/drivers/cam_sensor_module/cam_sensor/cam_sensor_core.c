@@ -1127,6 +1127,8 @@ int cam_sensor_apply_hyperlapse_settings(
 }
 #endif
 
+#define UNUSED(x) (void)(x)
+
 int cam_sensor_pre_apply_settings(
 	struct cam_sensor_ctrl_t *s_ctrl,
 	enum cam_sensor_packet_opcodes opcode)
@@ -1181,7 +1183,8 @@ int cam_sensor_post_apply_settings(
 {
 	int rc = 0;
 #if defined(CONFIG_SENSOR_RETENTION) && defined(CONFIG_SEC_DM3Q_PROJECT)
-	uint32_t sensor_id = s_ctrl->sensordata->slave_info.sensor_id;
+	uint32_t sensor_id __maybe_unused;
+	sensor_id = s_ctrl->sensordata->slave_info.sensor_id;
 #endif
 
 	switch (opcode) {

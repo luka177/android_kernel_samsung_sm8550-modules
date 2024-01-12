@@ -685,6 +685,7 @@ int cam_flash_off(struct cam_flash_ctrl *flash_ctrl)
 	return 0;
 }
 
+int cam_torch_off(struct cam_flash_ctrl *flash_ctrl);
 #if defined(CONFIG_SAMSUNG_PMIC_FLASH)
 int cam_torch_off(struct cam_flash_ctrl *flash_ctrl)
 {

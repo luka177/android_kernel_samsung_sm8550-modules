@@ -1678,10 +1678,6 @@ int cam_sec_eeprom_update_module_info(struct cam_eeprom_ctrl_t *e_ctrl)
 	int             rc = 0;
 
 	uint32_t        ConfAddr 	  = 0;
-#if defined(CONFIG_SAMSUNG_REAR_TRIPLE) || defined(CONFIG_SAMSUNG_REAR_TOF) || defined(CONFIG_SAMSUNG_FRONT_TOF) || defined(CONFIG_SAMSUNG_REAR_QUADRA)
-	uint32_t        ConfSize      = 0;
-#endif
-
 	ModuleInfo_t 	mInfo;
 	ModuleInfo_t 	mInfoSub;
 
@@ -1691,6 +1687,10 @@ int cam_sec_eeprom_update_module_info(struct cam_eeprom_ctrl_t *e_ctrl)
 	unsigned int rev = 0;
 #endif
 
+#if defined(CONFIG_SAMSUNG_REAR_TRIPLE) || defined(CONFIG_SAMSUNG_REAR_TOF) || defined(CONFIG_SAMSUNG_FRONT_TOF) || defined(CONFIG_SAMSUNG_REAR_QUADRA)
+	uint32_t        ConfSize     __maybe_unused;
+	ConfSize = 0;
+#endif
 	CAM_INFO(CAM_EEPROM, "E");
 
 	if (!e_ctrl) {
